@@ -19,15 +19,15 @@ myPointDirection = Math.random() * 360;
 accelerate(.5);
 }
 public void checkForContact(){
-for(Bullet bullet : aBullets){
+  for(Bullet bullet : aBullets){
   if(bullet.getAlive()){
-double xdistance = bullet.getX() - myCenterX;
-double ydistance = bullet.getY() - myCenterY;
-double distancetotal= xdistance * xdistance + ydistance * ydistance;
-distancetotal = Math.sqrt(distancetotal);
-  if(distancetotal <= 10){
-  initialize();
+    /*double xdistance = bullet.getX() - myCenterX;
+  double ydistance = bullet.getY() - myCenterY;
+  double distancetotal= xdistance * xdistance + ydistance * ydistance;
+  distancetotal = Math.sqrt(distancetotal);*/
+  if(dist((float)bullet.getX(),(float)bullet.getY(),(float)myCenterX,(float)myCenterY) <= 15){
   bullet.kill();
+  initialize();
   }
 }
 }

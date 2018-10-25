@@ -4,6 +4,8 @@ boolean dKey = false;
 boolean sKey = false;
 boolean spaceBar = false;
 int firetimer = 0;
+double leftturn = 1;
+double rightturn = -1;
 Floater Player;
 ArrayList<Bullet> aBullets = new ArrayList<Bullet>();
 ArrayList<Asteriod> aAsteriods = new ArrayList<Asteriod>();
@@ -14,7 +16,7 @@ public void setup()
   size(1440,960);
   Player = new Spaceship();
   Player.show();
-  for(int i = 0; i < 15; i++){
+  for(int i = 0; i < 25; i++){
   aAsteriods.add(new Asteriod());
   }
   for(int x = 0; x < 100; x++){
@@ -26,7 +28,12 @@ public void draw()
 {
   if(((Spaceship)Player).getAlive()){
   if(aKey){
-  Player.turn(10);
+    if(leftturn < 10){
+  leftturn += .25;
+    }
+  Player.turn((int)leftturn);
+  } else{
+  leftturn = 1;
   }
   if(spaceBar){
    if(firetimer == 0){
@@ -40,7 +47,12 @@ public void draw()
   Player.accelerate(.02);
   }
   if(dKey){
-  Player.turn(-10);
+    if(rightturn > -10){
+   rightturn -= .25;
+    }
+  Player.turn((int)rightturn);
+  } else{
+  rightturn = -1;
   }
   Player.move();
   background(0);
@@ -76,6 +88,9 @@ wKey = true;
 }
 if(key == ' '){
 spaceBar = true;
+}
+if(key == '2'){
+((Spaceship)Player).hyperspace();
 }
 }
 public void keyReleased(){
