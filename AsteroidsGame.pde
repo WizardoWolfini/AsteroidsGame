@@ -24,10 +24,32 @@ public void setup()
   }
   //your code here
 }
+public void reset(){
+wKey = false;
+aKey = false;
+dKey = false;
+sKey = false;
+spaceBar = false;
+firetimer = 0;
+leftturn = 1;
+rightturn = -1;
+aBullets = new ArrayList<Bullet>();
+aAsteriods = new ArrayList<Asteriod>();
+aStars = new ArrayList<Star>();
+  size(1440,960);
+  Player = new Spaceship();
+  Player.show();
+  for(int i = 0; i < 25; i++){
+  aAsteriods.add(new Asteriod());
+  }
+  for(int x = 0; x < 100; x++){
+  aStars.add(new Star());
+  }
+}
 public void draw() 
 {
   if(((Spaceship)Player).getAlive()){
-  if(aKey){
+  if(dKey){
     if(leftturn < 10){
   leftturn += .25;
     }
@@ -38,7 +60,7 @@ public void draw()
   if(spaceBar){
    if(firetimer == 0){
   ((Spaceship)Player).shoot();
-  firetimer = 20;
+  firetimer = 1;
    } else{
    firetimer--;
    }
@@ -46,7 +68,10 @@ public void draw()
   if(wKey){
   Player.accelerate(.02);
   }
-  if(dKey){
+  if(sKey){
+  Player.accelerate(-.02);
+  }
+  if(aKey){
     if(rightturn > -10){
    rightturn -= .25;
     }
@@ -68,6 +93,7 @@ public void draw()
   for(Asteriod a : aAsteriods){
   a.show();
   a.move();
+  a.spawnt();
   a.checkForContact();
   }
   }
@@ -88,6 +114,9 @@ wKey = true;
 }
 if(key == ' '){
 spaceBar = true;
+}
+if(key == 'r'){
+reset();
 }
 if(key == '2'){
 ((Spaceship)Player).hyperspace();
@@ -110,4 +139,8 @@ if(key == ' '){
 spaceBar = false;
 firetimer = 0;
 }
+}
+public void mouseMoved(){
+Player.setX((int)mouseX);
+Player.setY((int)mouseY);
 }

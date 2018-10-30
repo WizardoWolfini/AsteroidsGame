@@ -17,12 +17,10 @@ class Spaceship extends Floater
   }
   public void checkForContact(){
   for(Asteriod a : aAsteriods){
-  /*double distancex = a.getX() - myCenterX;
-  double distancey = a.getY() - myCenterY;
-  double distancetotal = distancex * distancex + distancey * distancey;
-  distancetotal = Math.sqrt(distancetotal);*/
+  if(a.getAlive()){
   if(dist((float)a.getX(),(float)a.getY(),(float)myCenterX,(float)myCenterY) <= 10){
   alive = false;
+  }
   }
   }
   }
@@ -35,6 +33,11 @@ class Spaceship extends Floater
   public void shoot(){
   Bullet bullet = new Bullet(myCenterX,myCenterY,myPointDirection);
   aBullets.add(bullet);
+  Bullet bullet1;
+  for(int i = 1; i <= 35; i++){
+  bullet1 = new Bullet(myCenterX,myCenterY,myPointDirection-10 * i);
+  aBullets.add(bullet1);
+  }
   }
   public void setX(int x){
   myCenterX = x;

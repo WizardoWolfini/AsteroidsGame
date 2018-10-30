@@ -1,4 +1,6 @@
 class Asteriod extends Floater{
+boolean alive;
+int spawntimer;
 Asteriod(){
 initialize();
 }
@@ -17,6 +19,19 @@ yCorners = yArray;
 myColor = 50;
 myPointDirection = Math.random() * 360;
 accelerate(.5);
+alive = false;
+spawntimer = 0;
+}
+public boolean getAlive(){
+return alive;
+}
+public void spawnt(){
+if(spawntimer <65){
+ spawntimer++;
+  if(spawntimer == 60){
+  alive = true;
+  }
+}
 }
 public void checkForContact(){
   for(Bullet bullet : aBullets){
