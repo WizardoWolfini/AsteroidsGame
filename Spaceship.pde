@@ -1,7 +1,10 @@
 class Spaceship extends Floater  
 { 
+  private int numberofbullets;
   private boolean alive;
-  Spaceship(){
+  private int upgradeCounter;
+  private int upgradeThreshhold;
+  public Spaceship(){
   myPointDirection = 0;
   myCenterX = 540;
   myCenterY = 360;
@@ -14,6 +17,8 @@ class Spaceship extends Floater
   yCorners = yS;
   myColor = 200;
   alive = true;
+  numberofbullets = 0;
+  upgradeThreshhold = 20;
   }
   public void checkForContact(){
   for(Asteriod a : aAsteriods){
@@ -31,12 +36,22 @@ class Spaceship extends Floater
   myCenterY = Math.random() * 960;
   }
   public void shoot(){
-  Bullet bullet = new Bullet(myCenterX,myCenterY,myPointDirection);
-  aBullets.add(bullet);
+  //Bullet bullet = new Bullet(myCenterX,myCenterY,myPointDirection);
+ // aBullets.add(bullet);
   Bullet bullet1;
-  for(int i = 1; i <= 35; i++){
+  for(int i = -numberofbullets; i <= numberofbullets; i++){
   bullet1 = new Bullet(myCenterX,myCenterY,myPointDirection-10 * i);
   aBullets.add(bullet1);
+  }
+  }
+  public void upgrade(){
+  upgradeCounter++;
+  if(upgradeCounter == upgradeThreshhold){
+    if(numberofbullets <= 17){
+  numberofbullets++;
+  upgradeThreshhold *=2;
+    }
+  upgradeCounter = 0;
   }
   }
   public void setX(int x){

@@ -7,7 +7,7 @@ private double xSpeed;
 private double ySpeed;
 private boolean alive;
 private int timealive;
-Bullet(double x, double y, double direction){
+public Bullet(double x, double y, double direction){
 myX1 = x;
 myY1 = y;
 double radians = direction*(Math.PI/180);     

@@ -1,7 +1,7 @@
 class Asteriod extends Floater{
 boolean alive;
 int spawntimer;
-Asteriod(){
+public Asteriod(){
 initialize();
 }
 private void initialize(){
@@ -16,7 +16,7 @@ yArray[i] += Math.random() * 10 - 5;
 }
 xCorners = xArray;
 yCorners = yArray;
-myColor = 50;
+myColor = 0;
 myPointDirection = Math.random() * 360;
 accelerate(.5);
 alive = false;
@@ -28,12 +28,13 @@ return alive;
 public void spawnt(){
 if(spawntimer <65){
  spawntimer++;
+ myColor++;
   if(spawntimer == 60){
   alive = true;
   }
 }
 }
-public void checkForContact(){
+public boolean checkForContact(){
   for(Bullet bullet : aBullets){
   if(bullet.getAlive()){
     /*double xdistance = bullet.getX() - myCenterX;
@@ -43,9 +44,12 @@ public void checkForContact(){
   if(dist((float)bullet.getX(),(float)bullet.getY(),(float)myCenterX,(float)myCenterY) <= 15){
   bullet.kill();
   initialize();
+  return true;
   }
+  
 }
 }
+return false;
 }
  public void setX(int x){
   myCenterX = x;

@@ -3,6 +3,8 @@ boolean aKey = false;
 boolean dKey = false;
 boolean sKey = false;
 boolean spaceBar = false;
+boolean cheats = false;
+int kills = 0;
 int firetimer = 0;
 double leftturn = 1;
 double rightturn = -1;
@@ -33,6 +35,7 @@ spaceBar = false;
 firetimer = 0;
 leftturn = 1;
 rightturn = -1;
+kills = 0;
 aBullets = new ArrayList<Bullet>();
 aAsteriods = new ArrayList<Asteriod>();
 aStars = new ArrayList<Star>();
@@ -60,7 +63,7 @@ public void draw()
   if(spaceBar){
    if(firetimer == 0){
   ((Spaceship)Player).shoot();
-  firetimer = 1;
+  firetimer = 20;
    } else{
    firetimer--;
    }
@@ -94,9 +97,16 @@ public void draw()
   a.show();
   a.move();
   a.spawnt();
-  a.checkForContact();
+  if(a.checkForContact()){
+  ((Spaceship)Player).upgrade();
+  kills++;
   }
   }
+  }
+  stroke(255);
+  fill(255);
+  textSize(25);
+  text("Asteroids Destroyed: " + kills, 25,940);
   //your code here
 }
 public void keyPressed(){
@@ -141,6 +151,8 @@ firetimer = 0;
 }
 }
 public void mouseMoved(){
+  if(cheats){
 Player.setX((int)mouseX);
 Player.setY((int)mouseY);
+  }
 }
