@@ -1,10 +1,12 @@
 class Spaceship extends Floater  
 { 
   private int numberofbullets;
-  private boolean alive;
+  protected boolean alive;
   private int upgradeCounter;
   private int upgradeThreshhold;
+  private int hp;
   public Spaceship(){
+    hp = 3;
   myPointDirection = 0;
   myCenterX = 540;
   myCenterY = 360;
@@ -22,11 +24,23 @@ class Spaceship extends Floater
   }
   public void checkForContact(){
   for(Asteriod a : aAsteriods){
-  if(a.getAlive()){
-  if(dist((float)a.getX(),(float)a.getY(),(float)myCenterX,(float)myCenterY) <= 10){
+    if(a.getAlive()){
+   if(doesIntersect(a)){
+   hp--;
+   a.initialize();
+    }
+    }
+  }
+  for(Bullet bullet : aBullets){
+  if(bullet.getAlive() && !bullet.getFriendly()){
+  if(doesIntersect(bullet)){
+  hp--;
+  bullet.kill();
+  }
+  }
+  }
+  if(hp <= 0){
   alive = false;
-  }
-  }
   }
   }
   public void hyperspace(){
@@ -34,13 +48,12 @@ class Spaceship extends Floater
   myDirectionY = 0;
   myCenterX = Math.random() * 1440;
   myCenterY = Math.random() * 960;
+  myPointDirection = Math.random() *360;
   }
   public void shoot(){
-  //Bullet bullet = new Bullet(myCenterX,myCenterY,myPointDirection);
- // aBullets.add(bullet);
   Bullet bullet1;
   for(int i = -numberofbullets; i <= numberofbullets; i++){
-  bullet1 = new Bullet(myCenterX,myCenterY,myPointDirection-10 * i);
+  bullet1 = new Bullet(myCenterX,myCenterY,myPointDirection-10 * i,true);
   aBullets.add(bullet1);
   }
   }
@@ -50,6 +63,7 @@ class Spaceship extends Floater
     if(numberofbullets <= 17){
   numberofbullets++;
   upgradeThreshhold *=2;
+  hp = 3;
     }
   upgradeCounter = 0;
   }
@@ -86,5 +100,8 @@ class Spaceship extends Floater
   }
   public boolean getAlive(){
   return alive;
+  }
+  public int getHp(){
+  return hp;
   }
 }

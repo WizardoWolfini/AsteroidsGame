@@ -5,14 +5,19 @@ boolean sKey = false;
 boolean spaceBar = false;
 boolean cheats = false;
 int kills = 0;
+int upgradekills = 20;
+int upgradethreshhold = 20;
 int firetimer = 0;
 double leftturn = 1;
 double rightturn = -1;
 Floater Player;
+ArrayList<Alien> UFO = new ArrayList<Alien>();
 ArrayList<Bullet> aBullets = new ArrayList<Bullet>();
 ArrayList<Asteriod> aAsteriods = new ArrayList<Asteriod>();
 ArrayList<Star> aStars = new ArrayList<Star>();
 //your variable declarations here
+
+
 public void setup() 
 {
   size(1440,960);
@@ -23,6 +28,9 @@ public void setup()
   }
   for(int x = 0; x < 100; x++){
   aStars.add(new Star());
+  }
+  for(int a = 0; a < 10; a++){
+  //UFO.add(new Alien());
   }
   //your code here
 }
@@ -36,11 +44,14 @@ firetimer = 0;
 leftturn = 1;
 rightturn = -1;
 kills = 0;
+upgradekills = 20;
+upgradethreshhold = 20;
 aBullets = new ArrayList<Bullet>();
 aAsteriods = new ArrayList<Asteriod>();
 aStars = new ArrayList<Star>();
   size(1440,960);
   Player = new Spaceship();
+  UFO = new ArrayList<Alien>();
   Player.show();
   for(int i = 0; i < 25; i++){
   aAsteriods.add(new Asteriod());
@@ -54,7 +65,7 @@ public void draw()
   if(((Spaceship)Player).getAlive()){
   if(dKey){
     if(leftturn < 10){
-  leftturn += .25;
+  leftturn += 1;
     }
   Player.turn((int)leftturn);
   } else{
@@ -76,7 +87,7 @@ public void draw()
   }
   if(aKey){
     if(rightturn > -10){
-   rightturn -= .25;
+   rightturn -= 1;
     }
   Player.turn((int)rightturn);
   } else{
@@ -100,13 +111,27 @@ public void draw()
   if(a.checkForContact()){
   ((Spaceship)Player).upgrade();
   kills++;
+  upgradekills--;
+  if(upgradekills == 0){
+  upgradethreshhold *= 2;
+  upgradekills = upgradethreshhold;
+  UFO.add(new Alien());  
+}
   }
+  }
+  for(Alien UFO : UFO){
+  UFO.show();
+  UFO.checkForContact();
+  UFO.shoot((Spaceship)Player);
+  UFO.move();
   }
   }
   stroke(255);
   fill(255);
   textSize(25);
   text("Asteroids Destroyed: " + kills, 25,940);
+  text("Asteroids until next upgrade: " + upgradekills, 500,940);
+  text("HP: " + ((Spaceship)Player).getHp(),100,100);
   //your code here
 }
 public void keyPressed(){

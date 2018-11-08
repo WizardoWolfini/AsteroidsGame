@@ -1,51 +1,73 @@
-class Bullet{
-private double myX1;
-private double myX2;
-private double myY1;
-private double myY2;
-private double xSpeed;
-private double ySpeed;
+class Bullet extends Floater{
 private boolean alive;
 private int timealive;
-public Bullet(double x, double y, double direction){
-myX1 = x;
-myY1 = y;
-double radians = direction*(Math.PI/180);     
-xSpeed = (5 * Math.cos(radians));    
-ySpeed = (5 * Math.sin(radians));     
-myX2 = x + xSpeed;
-myY2 = y + ySpeed;
+private boolean ifFriendly;
+public Bullet(double x, double y, double direction,boolean ally){
+myCenterX = x;
+myCenterY = y;
+myColor = 255;
+corners = 2;
+myPointDirection = direction;
+accelerate(5);
+int [] xCornersI = {0,5};
+int [] yCornersI = {0,0};
+xCorners = xCornersI;
+yCorners = yCornersI;
 alive = true;
 timealive = 0;
+ifFriendly = ally;
 }
 public void show(){
   if(alive){
-  stroke(255);
-line((float)myX1,(float)myY1,(float)myX2,(float)myY2);
-timealive++;
-if(timealive > 300){
+  timealive++;
+  super.show();
+if(timealive > 150){
 alive = false;
 }
   }
 }
+public boolean getFriendly(){
+return ifFriendly;
+}
 public void move(){
   if(alive){
-myX1 += xSpeed;
-myY1 += ySpeed;
-myX2 += xSpeed;
-myY2 += ySpeed;
+  super.move();
   }
-}
-public boolean getAlive(){
-return alive;
 }
 public void kill(){
 alive = false;
 }
-public double getX(){
-return myX2;
-}
-public double getY(){
-return myY2;
-}
+  public void setX(int x){
+  myCenterX = x;
+  }
+  public int getX(){
+  return (int)myCenterX;
+  }
+  public void setY(int y){
+  myCenterY = y;
+  }  
+  public int getY(){
+  return (int)myCenterY;
+  }
+  public void setDirectionX(double x){
+  myDirectionX = x;
+  }
+  public double getDirectionX(){
+  return myDirectionX;
+  }
+  public void setDirectionY(double y){
+  myDirectionY = y;
+  }   
+  public double getDirectionY(){
+  return myDirectionY;
+  }   
+  public void setPointDirection(int degrees){
+  myPointDirection = degrees;
+  }
+  public double getPointDirection(){
+  return myPointDirection;  
+  }
+  public boolean getAlive(){
+  return alive;
+  }
 }

@@ -4,19 +4,27 @@ int spawntimer;
 public Asteriod(){
 initialize();
 }
-private void initialize(){
+public void initialize(){
  myCenterX = 1440 * Math.random();
  myCenterY = 960 * Math.random();
- int[] xArray = {-10,0,10,10,10,0,-10,-10};
-  int[] yArray = {10,10,10,0,-10,-10,-10,0};
-  corners = 8;
-for(int i = 0; i < 7; i++){
-xArray[i] += Math.random() * 10 - 5;
-yArray[i] += Math.random() * 10 - 5;
+ int[] xArray = {-15,-10,0,10,15,20,20,20,15,10,0,-10,-15,-20,-20,-20};
+  int[] yArray = {15,20,20,20,15,10,0,-10,-15,-20,-20,-20,-15,-10,0,10};
+  corners = 16;
+for(int i = 0; i < corners; i++){
+xArray[i] += Math.random() * 7 - 3;
+yArray[i] += Math.random() * 7 - 3;
+}
+for(int j = 0; j < corners; j++){
+xArray[j] *= .5 * Math.random() + .5;
+yArray[j] *= .5 * Math.random() + .5;
+xArray[j] = (int)xArray[j];
+yArray[j] = (int)yArray[j];
 }
 xCorners = xArray;
 yCorners = yArray;
 myColor = 0;
+myDirectionX = 0;
+myDirectionY = 0;
 myPointDirection = Math.random() * 360;
 accelerate(.5);
 alive = false;
@@ -24,6 +32,10 @@ spawntimer = 0;
 }
 public boolean getAlive(){
 return alive;
+}
+public void move(){
+turn((int)(2*Math.random())+2);
+super.move();
 }
 public void spawnt(){
 if(spawntimer <65){
@@ -36,12 +48,8 @@ if(spawntimer <65){
 }
 public boolean checkForContact(){
   for(Bullet bullet : aBullets){
-  if(bullet.getAlive()){
-    /*double xdistance = bullet.getX() - myCenterX;
-  double ydistance = bullet.getY() - myCenterY;
-  double distancetotal= xdistance * xdistance + ydistance * ydistance;
-  distancetotal = Math.sqrt(distancetotal);*/
-  if(dist((float)bullet.getX(),(float)bullet.getY(),(float)myCenterX,(float)myCenterY) <= 15){
+  if(bullet.getAlive()&&bullet.getFriendly()){
+  if(doesIntersect(bullet)){
   bullet.kill();
   initialize();
   return true;

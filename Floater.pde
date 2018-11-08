@@ -36,8 +36,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   {      
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
-    myCenterY += myDirectionY;     
-
+    myCenterY += myDirectionY;    
     //wrap around screen    
     if(myCenterX >width)
     {     
@@ -82,5 +81,49 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //"unrotate" and "untranslate" in reverse order
     rotate(-1*dRadians);
     translate(-1*(float)myCenterX, -1*(float)myCenterY);
-  }   
+  }
+  public boolean doesIntersect(Floater floater)
+  {
+    boolean intersection = false;
+    for (int k=0; k < floater.getXCorners().length; k++)
+    {
+      if (doesIntersectAtPoint(floater.getXCorners()[k] + floater.getX(), floater.getYCorners()[k] + floater.getY()))
+      {
+        intersection = true;
+      }
+    }
+    return intersection;
+  }
+  private boolean doesIntersectAtPoint(int x, int y)
+  {
+    int[] xVertex = new int[corners];
+    int[] yVertex = new int[corners];
+    float dRadians = (float)(myPointDirection*(Math.PI/180));
+    for (int i=0; i < corners; i++)
+    {
+      xVertex[i] = (int)(xCorners[i]*Math.cos(dRadians) - yCorners[i]*Math.sin(dRadians)) + (int)myCenterX;
+      yVertex[i] = (int)(xCorners[i]*Math.sin(dRadians) + yCorners[i]*Math.cos(dRadians)) + (int)myCenterY;
+    }
+
+    return pnpoly(corners, xVertex, yVertex, x, y);
+  }
+
+  private boolean pnpoly(int nvert, int[] vertx, int[] verty, int testx, int testy)
+  {
+    int i, j;
+    boolean c = false;
+    for (i = 0, j = nvert-1; i < nvert; j = i++) {
+      if (((verty[i]>testy) != (verty[j]>testy)) && (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]))
+      {
+        c = !c;
+      }
+    }
+    return c;
+  }
+   public int[] getXCorners(){
+  return xCorners;
+  }
+  public int[] getYCorners(){
+  return yCorners;
+  }
 } 

@@ -1,7 +1,7 @@
 class Star //note that this class does NOT extend Floater
 {
   private float myX,myY;
-  Star(){
+  public Star(){
   myX = (float)(Math.random() * 1440);
   myY = (float)(Math.random() * 960);
   }
