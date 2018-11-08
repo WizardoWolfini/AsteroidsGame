@@ -15,7 +15,7 @@ public Alien(){
   yCorners = yS;
   myColor = 200;
   alive = true;
-  hp = 20;
+  hp = 5;
   firetimer = 0;
   myDirectionX = 9*Math.random()-4;
   myDirectionY = 3 * Math.random()-1;
