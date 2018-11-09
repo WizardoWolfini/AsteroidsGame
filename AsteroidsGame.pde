@@ -11,7 +11,7 @@ int firetimer = 0;
 double leftturn = 1;
 double rightturn = -1;
 Floater Player;
-ArrayList<Alien> UFO = new ArrayList<Alien>();
+ArrayList<Alien> UFOArray = new ArrayList<Alien>();
 ArrayList<Bullet> aBullets = new ArrayList<Bullet>();
 ArrayList<Asteriod> aAsteriods = new ArrayList<Asteriod>();
 ArrayList<Star> aStars = new ArrayList<Star>();
@@ -51,7 +51,7 @@ aAsteriods = new ArrayList<Asteriod>();
 aStars = new ArrayList<Star>();
   size(1440,960);
   Player = new Spaceship();
-  UFO = new ArrayList<Alien>();
+  UFOArray = new ArrayList<Alien>();
   Player.show();
   for(int i = 0; i < 25; i++){
   aAsteriods.add(new Asteriod());
@@ -115,11 +115,11 @@ public void draw()
   if(upgradekills == 0){
   upgradethreshhold *= 2;
   upgradekills = upgradethreshhold;
-  UFO.add(new Alien());  
+  UFOArray.add(new Alien());  
 }
   }
   }
-  for(Alien UFO : UFO){
+  for(Alien UFO : UFOArray){
   UFO.show();
   UFO.checkForContact();
   UFO.shoot((Spaceship)Player);
