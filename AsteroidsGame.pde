@@ -12,6 +12,7 @@ int upgradethreshhold = 20;
 int firetimer = 0;
 double leftturn = 1;
 double rightturn = -1;
+double speed = 2;
 Floater Player;
 ArrayList<Alien> UFOArray = new ArrayList<Alien>();
 ArrayList<Bullet> aBullets = new ArrayList<Bullet>();
@@ -22,6 +23,7 @@ ArrayList<Star> aStars = new ArrayList<Star>();
 
 public void setup() 
 {
+  frameRate(60);
   size(1440,960);
   Player = new Spaceship();
   Player.show();
@@ -82,17 +84,25 @@ public void draw()
    }
   }
   if(wKey){
-  Player.accelerate(2);
+  Player.accelerate(speed);
   }
   if(sKey){
-  Player.accelerate(-2);
+  Player.accelerate(-speed);
   }
   if(eKey){
-  ((Spaceship)Player).accelerate(90,2);
+  ((Spaceship)Player).accelerate(90,speed);
   }
   
   if(qKey){
-  ((Spaceship)Player).accelerate(-90,2);
+  ((Spaceship)Player).accelerate(-90,speed);
+  }
+  if(wKey  || eKey || qKey){
+  if(speed < 3.5){
+  speed += .15;
+  }
+  }else{
+  Player.setDirectionX(Player.getDirectionX()/1.025);
+  Player.setDirectionY(Player.getDirectionY()/1.025);
   }
   if(aKey){
     if(rightturn > -5){
@@ -124,7 +134,10 @@ public void draw()
   if(upgradekills == 0){
   upgradethreshhold *= 2;
   upgradekills = upgradethreshhold;
-  UFOArray.add(new Alien());  
+  UFOArray.add(new Alien()); 
+  if(speed > 1){
+  speed -= .1;
+  }
 }
   }
   }
