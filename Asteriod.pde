@@ -11,12 +11,12 @@ public void initialize(){
   int[] yArray = {15,20,20,20,15,10,0,-10,-15,-20,-20,-20,-15,-10,0,10};
   corners = 16;
 for(int i = 0; i < corners; i++){
-xArray[i] += Math.random() * 7 - 3;
-yArray[i] += Math.random() * 7 - 3;
+xArray[i] += Math.random() * 5 - 2;
+yArray[i] += Math.random() * 5 - 2;
 }
 for(int j = 0; j < corners; j++){
-xArray[j] *= .5 * Math.random() + .5;
-yArray[j] *= .5 * Math.random() + .5;
+xArray[j] *= .25 * Math.random() + .75;
+yArray[j] *= .25 * Math.random() + .75;
 xArray[j] = (int)xArray[j];
 yArray[j] = (int)yArray[j];
 }

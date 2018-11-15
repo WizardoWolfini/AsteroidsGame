@@ -57,6 +57,18 @@ class Spaceship extends Floater
   aBullets.add(bullet1);
   }
   }
+  public void accelerate(double speed){
+    myDirectionX = 0;
+    myDirectionY = 0;
+  super.accelerate(speed);
+  }
+  public void accelerate(int angle, double speed){
+    myDirectionX = 0;
+    myDirectionY = 0;
+  myPointDirection += angle;
+  super.accelerate(speed);
+  myPointDirection -= angle;
+  }
   public void upgrade(){
   upgradeCounter++;
   if(upgradeCounter == upgradeThreshhold){

@@ -2,6 +2,8 @@ boolean wKey = false;
 boolean aKey = false;
 boolean dKey = false;
 boolean sKey = false;
+boolean qKey = false;
+boolean eKey = false;
 boolean spaceBar = false;
 boolean cheats = false;
 int kills = 0;
@@ -64,7 +66,7 @@ public void draw()
 {
   if(((Spaceship)Player).getAlive()){
   if(dKey){
-    if(leftturn < 10){
+    if(leftturn < 5){
   leftturn += 1;
     }
   Player.turn((int)leftturn);
@@ -80,13 +82,20 @@ public void draw()
    }
   }
   if(wKey){
-  Player.accelerate(.02);
+  Player.accelerate(2);
   }
   if(sKey){
-  Player.accelerate(-.02);
+  Player.accelerate(-2);
+  }
+  if(eKey){
+  ((Spaceship)Player).accelerate(90,2);
+  }
+  
+  if(qKey){
+  ((Spaceship)Player).accelerate(-90,2);
   }
   if(aKey){
-    if(rightturn > -10){
+    if(rightturn > -5){
    rightturn -= 1;
     }
   Player.turn((int)rightturn);
@@ -147,6 +156,12 @@ dKey = true;
 if(key == 'w' || key == 'W'){
 wKey = true;
 }
+if(key == 'q' || key == 'Q'){
+qKey = true;
+}
+if(key == 'e' || key == 'E'){
+eKey = true;
+}
 if(key == ' '){
 spaceBar = true;
 }
@@ -169,6 +184,12 @@ dKey = false;
 }
 if(key == 'w' || key == 'W'){
 wKey = false;
+}
+if(key == 'q' || key == 'Q'){
+qKey = false;
+}
+if(key == 'e' || key == 'E'){
+eKey = false;
 }
 if(key == ' '){
 spaceBar = false;
