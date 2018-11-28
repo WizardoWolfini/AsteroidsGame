@@ -20,14 +20,14 @@ class Spaceship extends Floater
   myColor = 200;
   alive = true;
   numberofbullets = 0;
-  upgradeThreshhold = 20;
+  upgradeThreshhold = 50;
   }
   public void checkForContact(){
   for(Asteriod a : aAsteriods){
     if(a.getAlive()){
    if(doesIntersect(a)){
    hp--;
-   a.initialize();
+   a.initialize(speedAsteriod);
     }
     }
   }

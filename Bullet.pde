@@ -31,6 +31,14 @@ return ifFriendly;
 }
 public void move(){
   if(alive){
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;    
+    if(myCenterX >width ||myCenterX<0 ||myCenterY >height ||myCenterY < 0)
+    {       
+      kill();  
+    }    
+    myCenterX -= myDirectionX;    
+    myCenterY -= myDirectionY;  
   super.move();
   }
 }

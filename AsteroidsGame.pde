@@ -7,9 +7,12 @@ boolean eKey = false;
 boolean spaceBar = false;
 boolean cheats = false;
 int kills = 0;
-int upgradekills = 20;
-int upgradethreshhold = 20;
+int upgradekills = 50;
+int upgradethreshhold = 50;
 int firetimer = 0;
+int spawntimer = 0;
+int maxspawntimer = 40;
+double speedAsteriod = 1;
 double leftturn = 1;
 double rightturn = -1;
 double speed = 2;
@@ -28,7 +31,7 @@ public void setup()
   Player = new Spaceship();
   Player.show();
   for(int i = 0; i < 25; i++){
-  aAsteriods.add(new Asteriod());
+  aAsteriods.add(new Asteriod(speedAsteriod));
   }
   for(int x = 0; x < 100; x++){
   aStars.add(new Star());
@@ -48,8 +51,10 @@ firetimer = 0;
 leftturn = 1;
 rightturn = -1;
 kills = 0;
-upgradekills = 20;
-upgradethreshhold = 20;
+upgradekills = 50;
+upgradethreshhold = 50;
+spawntimer = 0;
+speedAsteriod = 0;
 aBullets = new ArrayList<Bullet>();
 aAsteriods = new ArrayList<Asteriod>();
 aStars = new ArrayList<Star>();
@@ -58,7 +63,7 @@ aStars = new ArrayList<Star>();
   UFOArray = new ArrayList<Alien>();
   Player.show();
   for(int i = 0; i < 25; i++){
-  aAsteriods.add(new Asteriod());
+  aAsteriods.add(new Asteriod(speedAsteriod));
   }
   for(int x = 0; x < 100; x++){
   aStars.add(new Star());
@@ -66,6 +71,11 @@ aStars = new ArrayList<Star>();
 }
 public void draw() 
 {
+  spawntimer++;
+  if(spawntimer == maxspawntimer){
+  spawntimer = 0;
+  aAsteriods.add(new Asteriod(speedAsteriod));
+  }
   if(((Spaceship)Player).getAlive()){
   if(dKey){
     if(leftturn < 5){
@@ -78,7 +88,7 @@ public void draw()
   if(spaceBar){
    if(firetimer == 0){
   ((Spaceship)Player).shoot();
-  firetimer = 20;
+  firetimer = 15;
    } else{
    firetimer--;
    }
@@ -123,6 +133,7 @@ public void draw()
   bullet.move();
   bullet.show();
   }
+  ArrayList<Asteriod> listRemoveAsteriods = new ArrayList<Asteriod>();
   for(Asteriod a : aAsteriods){
   a.show();
   a.move();
@@ -131,6 +142,8 @@ public void draw()
   ((Spaceship)Player).upgrade();
   kills++;
   upgradekills--;
+  speedAsteriod += .1;
+  listRemoveAsteriods.add(a);
   if(upgradekills == 0){
   upgradethreshhold *= 2;
   upgradekills = upgradethreshhold;
@@ -140,6 +153,9 @@ public void draw()
   }
 }
   }
+  }
+  for(Asteriod Asteriod : listRemoveAsteriods){
+  killAsteriod(Asteriod);
   }
   for(Alien UFO : UFOArray){
   UFO.show();
@@ -155,6 +171,9 @@ public void draw()
   text("Asteroids until next upgrade: " + upgradekills, 500,940);
   text("HP: " + ((Spaceship)Player).getHp(),100,100);
   //your code here
+}
+public void killAsteriod(Asteriod a){
+aAsteriods.remove(aAsteriods.indexOf(a));
 }
 public void keyPressed(){
 if(key == 'a' || key == 'A'){

@@ -1,10 +1,10 @@
 class Asteriod extends Floater{
 boolean alive;
 int spawntimer;
-public Asteriod(){
-initialize();
+public Asteriod(double speed){
+initialize(speed);
 }
-public void initialize(){
+public void initialize(double speed){
  myCenterX = 1440 * Math.random();
  myCenterY = 960 * Math.random();
  int[] xArray = {-15,-10,0,10,15,20,20,20,15,10,0,-10,-15,-20,-20,-20};
@@ -26,7 +26,7 @@ myColor = 0;
 myDirectionX = 0;
 myDirectionY = 0;
 myPointDirection = Math.random() * 360;
-accelerate(.5);
+accelerate(.5 * speed);
 alive = false;
 spawntimer = 0;
 }
@@ -51,7 +51,7 @@ public boolean checkForContact(){
   if(bullet.getAlive()&&bullet.getFriendly()){
   if(doesIntersect(bullet)){
   bullet.kill();
-  initialize();
+  //initialize();
   return true;
   }
   

@@ -3,7 +3,7 @@ class Alien extends Spaceship
   private int hp;
   private int firetimer;
 public Alien(){
- myPointDirection = 0;
+ myPointDirection = 90;
   myCenterX = Math.random()*1440;
   myCenterY = Math.random()*960;
   corners = 6;
@@ -15,7 +15,7 @@ public Alien(){
   yCorners = yS;
   myColor = 200;
   alive = true;
-  hp = 5;
+  hp = 20;
   firetimer = 0;
   myDirectionX = 9*Math.random()-4;
   myDirectionY = 3 * Math.random()-1;
