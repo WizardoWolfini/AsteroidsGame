@@ -128,7 +128,7 @@ public void draw()
   star.show();  
   }
   Player.show();
-  ((Spaceship)Player).checkForContact();
+  ((Spaceship)Player).checkForContact(speedAsteriod);
   for(Bullet bullet : aBullets){
   bullet.move();
   bullet.show();

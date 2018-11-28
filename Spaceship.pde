@@ -22,7 +22,7 @@ class Spaceship extends Floater
   numberofbullets = 0;
   upgradeThreshhold = 50;
   }
-  public void checkForContact(){
+  public void checkForContact(double speedAsteriod){
   for(Asteriod a : aAsteriods){
     if(a.getAlive()){
    if(doesIntersect(a)){
