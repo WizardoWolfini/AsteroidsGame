@@ -4,7 +4,7 @@ int spawntimer;
 public Asteriod(double speed){
 initialize(speed);
 }
-public void initialize(double speed){
+private void initialize(double speed){
  myCenterX = 1440 * Math.random();
  myCenterY = 960 * Math.random();
  int[] xArray = {-15,-10,0,10,15,20,20,20,15,10,0,-10,-15,-20,-20,-20};

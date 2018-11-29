@@ -54,7 +54,7 @@ kills = 0;
 upgradekills = 50;
 upgradethreshhold = 50;
 spawntimer = 0;
-speedAsteriod = 0;
+speedAsteriod = 1;
 aBullets = new ArrayList<Bullet>();
 aAsteriods = new ArrayList<Asteriod>();
 aStars = new ArrayList<Star>();
@@ -154,8 +154,8 @@ public void draw()
 }
   }
   }
-  for(Asteriod Asteriod : listRemoveAsteriods){
-  killAsteriod(Asteriod);
+  for(Asteriod aAsteriod : listRemoveAsteriods){
+  killAsteriod(aAsteriod);
   }
   for(Alien UFO : UFOArray){
   UFO.show();
