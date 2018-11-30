@@ -21,6 +21,7 @@ ArrayList<Alien> UFOArray = new ArrayList<Alien>();
 ArrayList<Bullet> aBullets = new ArrayList<Bullet>();
 ArrayList<Asteriod> aAsteriods = new ArrayList<Asteriod>();
 ArrayList<Star> aStars = new ArrayList<Star>();
+ArrayList<Spaceship> aSpaceships = new ArrayList<Spaceship>();
 //your variable declarations here
 
 
@@ -39,6 +40,7 @@ public void setup()
   for(int a = 0; a < 10; a++){
   //UFO.add(new Alien());
   }
+  aSpaceships.add(new Spaceship());
   //your code here
 }
 public void reset(){
@@ -71,7 +73,16 @@ aStars = new ArrayList<Star>();
 }
 public void draw() 
 {
+  for(int ti = aSpaceships.size()- 1;ti > 1;ti--){
+  aSpaceships.get(ti).setX(aSpaceships.get(ti-1).getX());
+  aSpaceships.get(ti).setY(aSpaceships.get(ti-1).getY());
+  aSpaceships.get(ti).setPointDirection((int)aSpaceships.get(ti-1).getPointDirection());
+  }
+  aSpaceships.get(0).setX(Player.getX());
+  aSpaceships.get(0).setY(Player.getY());
+  aSpaceships.get(0).setPointDirection((int)Player.getPointDirection());
   spawntimer++;
+  aSpaceships.add(0, new Spaceship());
   if(spawntimer == maxspawntimer){
   spawntimer = 0;
   aAsteriods.add(new Asteriod(speedAsteriod));
@@ -126,6 +137,9 @@ public void draw()
   background(0);
   for(Star star : aStars){
   star.show();  
+  }
+  for(Spaceship aship : aSpaceships){
+  aship.show();
   }
   Player.show();
   ((Spaceship)Player).checkForContact(speedAsteriod);
