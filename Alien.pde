@@ -15,7 +15,7 @@ public Alien(){
   yCorners = yS;
   myColor = 200;
   alive = true;
-  hp = 20;
+  hp = 10;
   firetimer = 0;
   myDirectionX = 9*Math.random()-4;
   myDirectionY = 3 * Math.random()-1;
@@ -36,6 +36,7 @@ public void shoot(Spaceship spaceship){
     if(firetimer >= 300){
   Bullet bullet1;
   bullet1 = new Bullet(myCenterX,myCenterY,180 - shootdir(spaceship),false);
+  myPointDirection = 180 - shootdir(spaceship);
   aBullets.add(bullet1);
   firetimer = 0;
     } else{

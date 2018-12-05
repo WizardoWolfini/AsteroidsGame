@@ -2,8 +2,6 @@ class Spaceship extends Floater
 { 
   private int numberofbullets;
   protected boolean alive;
-  private int upgradeCounter;
-  private int upgradeThreshhold;
   private int hp;
   public Spaceship(){
     hp = 3;
@@ -20,7 +18,6 @@ class Spaceship extends Floater
   myColor = 200;
   alive = true;
   numberofbullets = 0;
-  upgradeThreshhold = 50;
   }
   public void checkForContact(double speedAsteriod){
   for(Asteriod a : aAsteriods){
@@ -57,6 +54,9 @@ class Spaceship extends Floater
   aBullets.add(bullet1);
   }
   }
+  public void colorchange(int n){
+  myColor -= n;
+  }
   public void accelerate(double speed){
     myDirectionX = 0;
     myDirectionY = 0;
@@ -70,15 +70,10 @@ class Spaceship extends Floater
   myPointDirection -= angle;
   }
   public void upgrade(){
-  upgradeCounter++;
-  if(upgradeCounter == upgradeThreshhold){
     if(numberofbullets <= 17){
   numberofbullets++;
-  upgradeThreshhold *=2;
   hp = 3;
     }
-  upgradeCounter = 0;
-  }
   }
   public void setX(int x){
   myCenterX = x;

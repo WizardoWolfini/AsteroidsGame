@@ -17,11 +17,16 @@ double leftturn = 1;
 double rightturn = -1;
 double speed = 2;
 Floater Player;
+Capturepoint CP;
 ArrayList<Alien> UFOArray = new ArrayList<Alien>();
 ArrayList<Bullet> aBullets = new ArrayList<Bullet>();
 ArrayList<Asteriod> aAsteriods = new ArrayList<Asteriod>();
 ArrayList<Star> aStars = new ArrayList<Star>();
 ArrayList<Spaceship> aSpaceships = new ArrayList<Spaceship>();
+int taillength = 0;
+int tailoffset = 0;
+int cpointst = 10;
+int points = 0;
 //your variable declarations here
 
 
@@ -30,6 +35,7 @@ public void setup()
   frameRate(60);
   size(1440,960);
   Player = new Spaceship();
+  CP = new Capturepoint();
   Player.show();
   for(int i = 0; i < 25; i++){
   aAsteriods.add(new Asteriod(speedAsteriod));
@@ -44,6 +50,14 @@ public void setup()
   //your code here
 }
 public void reset(){
+  points = 0;
+  cpointst = 10;
+   CP = new Capturepoint();
+  speed = 0;
+  tailoffset = 0;
+  taillength = 0;
+  aSpaceships = new ArrayList<Spaceship>();
+  aSpaceships.add(new Spaceship());
 wKey = false;
 aKey = false;
 dKey = false;
@@ -73,16 +87,27 @@ aStars = new ArrayList<Star>();
 }
 public void draw() 
 {
-  for(int ti = aSpaceships.size()- 1;ti > 1;ti--){
-  aSpaceships.get(ti).setX(aSpaceships.get(ti-1).getX());
-  aSpaceships.get(ti).setY(aSpaceships.get(ti-1).getY());
-  aSpaceships.get(ti).setPointDirection((int)aSpaceships.get(ti-1).getPointDirection());
+  if(tailoffset == 5){
+  if(taillength < 5){
+  aSpaceships.add(new Spaceship());
+  aSpaceships.get(aSpaceships.size() -1).setX(Player.getX());
+  aSpaceships.get(aSpaceships.size() -1).setY(Player.getY());
+  aSpaceships.get(aSpaceships.size() -1).setPointDirection((int)Player.getPointDirection());
+  aSpaceships.get(aSpaceships.size()-1).colorchange(50);
+  taillength++;
+  }else{
+    aSpaceships.remove(aSpaceships.get(0));
+    aSpaceships.add(new Spaceship());
+  aSpaceships.get(aSpaceships.size() -1).setX(Player.getX());
+  aSpaceships.get(aSpaceships.size() -1).setY(Player.getY());
+  aSpaceships.get(aSpaceships.size() -1).setPointDirection((int)Player.getPointDirection());
+  aSpaceships.get(aSpaceships.size()-1).colorchange(50);
   }
-  aSpaceships.get(0).setX(Player.getX());
-  aSpaceships.get(0).setY(Player.getY());
-  aSpaceships.get(0).setPointDirection((int)Player.getPointDirection());
+  tailoffset =0;
+  } else{
+  tailoffset++;
+  }
   spawntimer++;
-  aSpaceships.add(0, new Spaceship());
   if(spawntimer == maxspawntimer){
   spawntimer = 0;
   aAsteriods.add(new Asteriod(speedAsteriod));
@@ -119,11 +144,20 @@ public void draw()
   }
   if(wKey  || eKey || qKey){
   if(speed < 3.5){
-  speed += .15;
+  speed += .25;
+  } else if(speed < 10){
+  speed += .105;
+  if(speed > 9.5){
+  ((Spaceship)Player).hyperspace();
+  speed = 0;
+  }
   }
   }else{
   Player.setDirectionX(Player.getDirectionX()/1.025);
   Player.setDirectionY(Player.getDirectionY()/1.025);
+  }
+    if(speed > 1){
+  speed -= .1;
   }
   if(aKey){
     if(rightturn > -5){
@@ -138,8 +172,21 @@ public void draw()
   for(Star star : aStars){
   star.show();  
   }
+    CP.show();
+  if(CP.capture((Spaceship)Player)){
+  if(cpointst > 0){
+  cpointst--;
+  }else{  
+    points++;
+  upgradekills -= 1;
+  cpointst = 10;  
+}
+  }
   for(Spaceship aship : aSpaceships){
-  aship.show();
+    aship.colorchange(3);
+    if(speed > 5){
+    aship.show();
+    }
   }
   Player.show();
   ((Spaceship)Player).checkForContact(speedAsteriod);
@@ -153,19 +200,11 @@ public void draw()
   a.move();
   a.spawnt();
   if(a.checkForContact()){
-  ((Spaceship)Player).upgrade();
   kills++;
+  points++;
   upgradekills--;
   speedAsteriod += .1;
   listRemoveAsteriods.add(a);
-  if(upgradekills == 0){
-  upgradethreshhold *= 2;
-  upgradekills = upgradethreshhold;
-  UFOArray.add(new Alien()); 
-  if(speed > 1){
-  speed -= .1;
-  }
-}
   }
   }
   for(Asteriod aAsteriod : listRemoveAsteriods){
@@ -178,12 +217,19 @@ public void draw()
   UFO.move();
   }
   }
+  if(upgradekills <= 0){
+    ((Spaceship)Player).upgrade();
+  upgradethreshhold *= 2;
+  upgradekills = upgradethreshhold;
+  UFOArray.add(new Alien()); 
+}
   stroke(255);
   fill(255);
   textSize(25);
   text("Asteroids Destroyed: " + kills, 25,940);
-  text("Asteroids until next upgrade: " + upgradekills, 500,940);
+  text("Points until next upgrade: " + upgradekills, 500,940);
   text("HP: " + ((Spaceship)Player).getHp(),100,100);
+  text("Points: " + points, 1100,940);
   //your code here
 }
 public void killAsteriod(Asteriod a){
@@ -216,6 +262,7 @@ reset();
 }
 if(key == '2'){
 ((Spaceship)Player).hyperspace();
+speed = 0;
 }
 }
 public void keyReleased(){
