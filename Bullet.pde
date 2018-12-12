@@ -1,7 +1,8 @@
 class Bullet extends Floater{
-private boolean alive;
-private int timealive;
-private boolean ifFriendly;
+protected boolean alive;
+protected boolean isMissile;
+protected int timealive;
+protected boolean ifFriendly;
 public Bullet(double x, double y, double direction,boolean ally){
 myCenterX = x;
 myCenterY = y;
@@ -16,6 +17,10 @@ yCorners = yCornersI;
 alive = true;
 timealive = 0;
 ifFriendly = ally;
+isMissile = false;
+}
+public boolean isM(){
+return isMissile;
 }
 public void show(){
   if(alive){

@@ -48,8 +48,11 @@ public void checkForContact(){
   if(alive){
   for(Bullet bullet : aBullets){
   if(bullet.getAlive()&&bullet.getFriendly()){
-  if(dist((float)bullet.getX(),(float)bullet.getY(),(float)myCenterX,(float)myCenterY) <= 15){
+  if(doesIntersect(bullet)){
   bullet.kill();
+  if(bullet.isM()){
+  ((Missile)bullet).explode();
+  }
   hp--;
   if(hp <= 0){
   alive = false;
@@ -58,6 +61,13 @@ public void checkForContact(){
   }
  }
 }
+  }
+}
+public void  minusHP(){
+hp--;
+  if(hp <= 0){
+  alive = false;
+  corners = 0;
   }
 }
   

@@ -49,9 +49,12 @@ class Spaceship extends Floater
   }
   public void shoot(){
   Bullet bullet1;
+  Missile Missile1;
   for(int i = -numberofbullets; i <= numberofbullets; i++){
   bullet1 = new Bullet(myCenterX,myCenterY,myPointDirection-10 * i,true);
-  aBullets.add(bullet1);
+  Missile1 = new Missile(myCenterX,myCenterY,myPointDirection-10 * i,true);
+  //aBullets.add(bullet1);
+  aBullets.add(Missile1);
   }
   }
   public void colorchange(int n){
@@ -110,5 +113,10 @@ class Spaceship extends Floater
   }
   public int getHp(){
   return hp;
+  }
+  public void addHp(int x){
+    if(hp < 3){
+  hp += x;
+    }
   }
 }

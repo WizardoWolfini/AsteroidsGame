@@ -1,6 +1,7 @@
 class Asteriod extends Floater{
-boolean alive;
-int spawntimer;
+private boolean alive;
+private int spawntimer;
+private boolean death2;
 public Asteriod(double speed){
 initialize(speed);
 }
@@ -47,17 +48,33 @@ if(spawntimer <65){
 }
 }
 public boolean checkForContact(){
+  if(death2){
+  return true;
+  }
   for(Bullet bullet : aBullets){
   if(bullet.getAlive()&&bullet.getFriendly()){
   if(doesIntersect(bullet)){
   bullet.kill();
-  //initialize();
+  if(bullet.isM()){
+  ((Missile)bullet).explode();
+  }
   return true;
   }
-  
-}
-}
+  }
+  }
+  //for(Missile m : aMissiles){
+  //if(m.getAlive()&&m.getFriendly()){
+  //if(doesIntersect(m)){
+  //m.kill();
+  //m.explode();
+  //return true;
+  //}
+ //}
+//}
 return false;
+}
+public void setDeath(){
+death2 = true;
 }
  public void setX(int x){
   myCenterX = x;

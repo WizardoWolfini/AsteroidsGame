@@ -28,6 +28,7 @@ int taillength = 0;
 int tailoffset = 0;
 int cpointst = 10;
 int points = 0;
+int firerate = 15;
 //your variable declarations here
 
 
@@ -51,6 +52,7 @@ public void setup()
   //your code here
 }
 public void reset(){
+  firerate = 15;
   points = 0;
   cpointst = 10;
    CP = new Capturepoint();
@@ -122,10 +124,18 @@ public void draw()
   } else{
   leftturn = 1;
   }
+  if(aKey){
+    if(rightturn > -5){
+   rightturn -= 1;
+    }
+  Player.turn((int)rightturn);
+  } else{
+  rightturn = -1;
+  }
   if(spaceBar){
    if(firetimer == 0){
   ((Spaceship)Player).shoot();
-  firetimer = 15;
+  firetimer = firerate;
    } else{
    firetimer--;
    }
@@ -160,14 +170,6 @@ public void draw()
     if(speed > 1){
   speed -= .1;
   }
-  if(aKey){
-    if(rightturn > -5){
-   rightturn -= 1;
-    }
-  Player.turn((int)rightturn);
-  } else{
-  rightturn = -1;
-  }
   Player.move();
   background(0);
   for(Star star : aStars){
@@ -182,6 +184,10 @@ public void draw()
   upgradekills -= 1;
   cpointst = 10;  
 }
+  }
+  if(CP.getHealth()){
+  ((Spaceship)Player).addHp(1);
+  CP.minusHealth();
   }
   for(Spaceship aship : aSpaceships){
     aship.colorchange(3);
@@ -204,7 +210,9 @@ public void draw()
   kills++;
   points++;
   upgradekills--;
-  speedAsteriod += .1;
+  if(speedAsteriod < 2.5){
+  speedAsteriod += .03;
+  }
   listRemoveAsteriods.add(a);
   }
   }
