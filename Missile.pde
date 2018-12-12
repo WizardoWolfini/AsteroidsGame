@@ -3,8 +3,10 @@ public Missile(double x, double y, double direction,boolean ally){
 super(x,y,direction,ally);
 corners = 5;
 accelerate(5);
-int [] yCornersI = {0,2,2,-2,-2};
-int [] xCornersI = {5,3,0,0,3};
+//int [] yCornersI = {0,2,2,-2,-2};
+//int [] xCornersI = {5,3,0,0,3};
+int [] yCornersI = {0,4,4,-4,-4};
+int [] xCornersI = {10,6,0,0,6};
 xCorners = xCornersI;
 yCorners = yCornersI;
 isMissile = true;

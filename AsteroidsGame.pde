@@ -156,9 +156,9 @@ public void draw()
   if(wKey  || eKey || qKey){
   if(speed < 3.5){
   speed += .25;
-  } else if(speed < 10){
+  } else if(speed < 25){
   speed += .105;
-  if(speed > 9.5){
+  if(speed > 24.5){
   ((Spaceship)Player).hyperspace();
   speed = 0;
   }
@@ -262,6 +262,9 @@ qKey = true;
 }
 if(key == 'e' || key == 'E'){
 eKey = true;
+}
+if(key == 'b' || key == 'B'){
+speed = 10;
 }
 if(key == ' '){
 spaceBar = true;
