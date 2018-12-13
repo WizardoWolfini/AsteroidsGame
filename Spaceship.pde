@@ -3,6 +3,7 @@ class Spaceship extends Floater
   private int numberofbullets;
   protected boolean alive;
   private int hp;
+  private boolean shootbullet;
   public Spaceship(){
     hp = 3;
   myPointDirection = 0;
@@ -18,6 +19,7 @@ class Spaceship extends Floater
   myColor = 200;
   alive = true;
   numberofbullets = 0;
+  shootbullet = true;
   }
   public void checkForContact(double speedAsteriod){
   for(Asteriod a : aAsteriods){
@@ -50,12 +52,18 @@ class Spaceship extends Floater
   public void shoot(){
   Bullet bullet1;
   Missile Missile1;
+  if(shootbullet == false){
+  Missile1 = new Missile(myCenterX,myCenterY,myPointDirection,true);
+  aBullets.add(Missile1);
+  }else{
   for(int i = -numberofbullets; i <= numberofbullets; i++){
   bullet1 = new Bullet(myCenterX,myCenterY,myPointDirection-10 * i,true);
-  Missile1 = new Missile(myCenterX,myCenterY,myPointDirection-10 * i,true);
-  //aBullets.add(bullet1);
-  aBullets.add(Missile1);
+  aBullets.add(bullet1);
   }
+  }
+  }
+  public void changefiretype(){
+  shootbullet = !shootbullet;
   }
   public void colorchange(int n){
   myColor -= n;

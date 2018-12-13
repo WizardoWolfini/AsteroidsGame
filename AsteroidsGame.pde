@@ -5,6 +5,7 @@ boolean dKey = false;
 boolean sKey = false;
 boolean qKey = false;
 boolean eKey = false;
+boolean vKey = false;
 boolean spaceBar = false;
 boolean cheats = false;
 int kills = 0;
@@ -266,6 +267,12 @@ eKey = true;
 if(key == 'b' || key == 'B'){
 speed = 10;
 }
+if(key == 'v' || key == 'V'){
+ if(vKey == false){
+((Spaceship)Player).changefiretype();
+vKey = true;
+ }
+}
 if(key == ' '){
 spaceBar = true;
 }
@@ -295,6 +302,9 @@ qKey = false;
 }
 if(key == 'e' || key == 'E'){
 eKey = false;
+}
+if(key == 'v' || key == 'V'){
+vKey = false;
 }
 if(key == ' '){
 spaceBar = false;
