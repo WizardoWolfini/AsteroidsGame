@@ -197,7 +197,7 @@ public void draw()
     }
   }
   Player.show();
-  ((Spaceship)Player).checkForContact(speedAsteriod);
+  ((Spaceship)Player).checkForContact(speedAsteriod, speed >= 10);
   for(Bullet bullet : aBullets){
   bullet.move();
   bullet.show();

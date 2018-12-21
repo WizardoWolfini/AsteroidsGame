@@ -21,12 +21,17 @@ class Spaceship extends Floater
   numberofbullets = 0;
   shootbullet = true;
   }
-  public void checkForContact(double speedAsteriod){
+  public void checkForContact(double speedAsteriod, boolean x){
   for(Asteriod a : aAsteriods){
     if(a.getAlive()){
+      float dRadians = (float)(myPointDirection*(Math.PI/180));
+      if(pnpoly(16,a.getXCorners(),a.getYCorners(),(int)(xCorners[0]*Math.cos(dRadians) - yCorners[0]*Math.sin(dRadians)) + (int)myCenterX, (int)(xCorners[0]*Math.sin(dRadians) + yCorners[0]*Math.cos(dRadians)) + (int)myCenterY )){
+        a.initialize(speedAsteriod);
+      }else{
    if(doesIntersect(a)){
    hp--;
    a.initialize(speedAsteriod);
+    }
     }
     }
   }

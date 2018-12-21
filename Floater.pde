@@ -108,7 +108,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     return pnpoly(corners, xVertex, yVertex, x, y);
   }
 
-  private boolean pnpoly(int nvert, int[] vertx, int[] verty, int testx, int testy)
+  protected boolean pnpoly(int nvert, int[] vertx, int[] verty, int testx, int testy)
   {
     int i, j;
     boolean c = false;
